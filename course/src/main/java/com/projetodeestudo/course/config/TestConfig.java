@@ -12,7 +12,7 @@ import java.util.Arrays;
 @Profile(value = "test")
 public class TestConfig implements CommandLineRunner {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     public TestConfig(UserRepository userRepository) {
         this.userRepository = userRepository;
