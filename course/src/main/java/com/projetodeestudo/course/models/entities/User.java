@@ -2,10 +2,7 @@ package com.projetodeestudo.course.models.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -28,6 +25,7 @@ public class User implements Serializable {
     private String phone;
     private String password;
 
+    @Setter(AccessLevel.NONE)
     @JsonIgnore
     @OneToMany(mappedBy = "client")
     private List<Order> orders = new ArrayList<>();

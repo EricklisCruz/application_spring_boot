@@ -3,10 +3,10 @@ package com.projetodeestudo.course.models.entities;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.projetodeestudo.course.models.enums.OrderStatus;
 import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.aspectj.weaver.ast.Or;
 
 import java.io.Serializable;
 import java.time.Instant;
@@ -16,6 +16,7 @@ import java.time.Instant;
 @Setter
 @Getter
 @NoArgsConstructor
+@EqualsAndHashCode(of = "id")
 public class Order implements Serializable {
 
     public static final long serialVersionUID = 1L;

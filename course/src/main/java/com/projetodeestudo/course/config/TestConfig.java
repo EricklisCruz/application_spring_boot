@@ -1,8 +1,10 @@
 package com.projetodeestudo.course.config;
 
+import com.projetodeestudo.course.models.entities.Category;
 import com.projetodeestudo.course.models.entities.Order;
 import com.projetodeestudo.course.models.entities.User;
 import com.projetodeestudo.course.models.enums.OrderStatus;
+import com.projetodeestudo.course.repositories.CategoryRepository;
 import com.projetodeestudo.course.repositories.OrderRepository;
 import com.projetodeestudo.course.repositories.UserRepository;
 import org.springframework.boot.CommandLineRunner;
@@ -18,10 +20,12 @@ public class TestConfig implements CommandLineRunner {
 
     private final UserRepository userRepository;
     private final OrderRepository orderRepository;
+    private final CategoryRepository categoryRepository;
 
-    public TestConfig(UserRepository userRepository, OrderRepository orderRepository) {
+    public TestConfig(UserRepository userRepository, OrderRepository orderRepository, CategoryRepository categoryRepository) {
         this.userRepository = userRepository;
         this.orderRepository = orderRepository;
+        this.categoryRepository = categoryRepository;
     }
 
     //EXECUTADO QUANDO A APLICAÇÃO É INICIADA
@@ -37,5 +41,11 @@ public class TestConfig implements CommandLineRunner {
         Order o3 = new Order(Instant.parse("2019-07-22T15:21:22Z"), OrderStatus.WAITING_PAYMENT,u1);
 
         orderRepository.saveAll(Arrays.asList(o1, o2, o3));
+
+        Category cat1 = new Category("Electronics");
+        Category cat2 = new Category("Books");
+        Category cat3 = new Category("Computers");
+
+        categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
     }
 }
