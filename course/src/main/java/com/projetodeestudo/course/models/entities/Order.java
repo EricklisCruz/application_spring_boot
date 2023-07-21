@@ -1,10 +1,12 @@
 package com.projetodeestudo.course.models.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.projetodeestudo.course.models.enums.OrderStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.aspectj.weaver.ast.Or;
 
 import java.io.Serializable;
 import java.time.Instant;
@@ -27,8 +29,21 @@ public class Order implements Serializable {
     @JoinColumn(name = "client_id")
     private User client;
 
-    public Order(Instant moment, User client) {
+    private Integer orderStatus;
+
+    public Order(Instant moment, OrderStatus orderStatus,User client) {
         this.moment = moment;
+        setOrderStatus(orderStatus);
         this.client = client;
+    }
+
+    public OrderStatus getOrderStatus() {
+        return OrderStatus.valueOf(orderStatus);
+    }
+
+    public void setOrderStatus(OrderStatus orderStatus) {
+        if (orderStatus != null) {
+            this.orderStatus = orderStatus.getCode();
+        }
     }
 }
