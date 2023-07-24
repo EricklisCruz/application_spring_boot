@@ -2,10 +2,7 @@ package com.projetodeestudo.course.config;
 
 import com.projetodeestudo.course.models.entities.*;
 import com.projetodeestudo.course.models.enums.OrderStatus;
-import com.projetodeestudo.course.repositories.CategoryRepository;
-import com.projetodeestudo.course.repositories.OrderRepository;
-import com.projetodeestudo.course.repositories.ProductRepository;
-import com.projetodeestudo.course.repositories.UserRepository;
+import com.projetodeestudo.course.repositories.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -22,11 +19,14 @@ public class TestConfig implements CommandLineRunner {
     private final CategoryRepository categoryRepository;
     private final ProductRepository productRepository;
 
-    public TestConfig(UserRepository userRepository, OrderRepository orderRepository, CategoryRepository categoryRepository, ProductRepository productRepository) {
+    private final OrderItemRepository orderItemRepository;
+
+    public TestConfig(UserRepository userRepository, OrderRepository orderRepository, CategoryRepository categoryRepository, ProductRepository productRepository, OrderItemRepository orderItemRepository) {
         this.userRepository = userRepository;
         this.orderRepository = orderRepository;
         this.categoryRepository = categoryRepository;
         this.productRepository = productRepository;
+        this.orderItemRepository = orderItemRepository;
     }
 
     //EXECUTADO QUANDO A APLICAÇÃO É INICIADA
@@ -70,5 +70,12 @@ public class TestConfig implements CommandLineRunner {
         OrderItem oi2 = new OrderItem(o1, p3, 1, p3.getPrice());
         OrderItem oi3 = new OrderItem(o2, p3, 2, p3.getPrice());
         OrderItem oi4 = new OrderItem(o3, p5, 2, p5.getPrice());
+
+        orderItemRepository.saveAll(Arrays.asList(oi1,oi2,oi3,oi4));
+
+        Payment pay1 = new Payment(Instant.parse("2019-06-20T21:53:07Z"), o1);
+        o1.setPayment(pay1);
+
+        orderRepository.save(o1);
     }
 }
