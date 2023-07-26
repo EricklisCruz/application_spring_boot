@@ -2,7 +2,7 @@ package com.projetodeestudo.course.service;
 
 import com.projetodeestudo.course.models.entities.User;
 import com.projetodeestudo.course.repositories.UserRepository;
-import org.springframework.stereotype.Component;
+import com.projetodeestudo.course.service.exceptions.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,7 +22,7 @@ public class UserService {
 
     public User findById(Integer id) {
         return userRepository.findById(id).orElseThrow(() ->
-                new RuntimeException("User not found!!"));
+                new ResourceNotFoundException(id));
     }
 
     public User insertUser(User user) {
