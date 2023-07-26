@@ -28,4 +28,10 @@ public class UserService {
     public User insertUser(User user) {
         return userRepository.save(user);
     }
+
+    public void delete(Integer id) {
+        User user = userRepository.getReferenceById(id);
+        userRepository.delete(user);
+
+    }
 }
