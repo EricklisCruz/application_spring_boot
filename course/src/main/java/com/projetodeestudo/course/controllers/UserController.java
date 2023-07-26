@@ -2,6 +2,7 @@ package com.projetodeestudo.course.controllers;
 
 import com.projetodeestudo.course.models.entities.User;
 import com.projetodeestudo.course.service.UserService;
+import jakarta.transaction.Transactional;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriBuilder;
@@ -40,7 +41,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteUser(@PathVariable Integer id) {
+    public ResponseEntity<Void> deleteUser(@PathVariable Integer id) {
         userServices.delete(id);
         return ResponseEntity.noContent().build();
     }
