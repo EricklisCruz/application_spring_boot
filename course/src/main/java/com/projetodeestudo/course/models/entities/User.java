@@ -9,8 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Getter
-@Setter
 @Table(name = "tb_user")
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
@@ -18,14 +16,18 @@ public class User implements Serializable {
 
     public static final long serialVersionUID = 1L;
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) @Getter
     private Integer id;
+    @Setter @Getter
     private String name;
+    @Setter @Getter
     private String email;
+    @Setter @Getter
     private String phone;
+    @Setter @Getter
     private String password;
 
-    @Setter(AccessLevel.NONE)
+    @Getter
     @JsonIgnore
     @OneToMany(mappedBy = "client")
     private List<Order> orders = new ArrayList<>();

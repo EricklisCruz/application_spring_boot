@@ -2,12 +2,13 @@ package com.projetodeestudo.course.controllers;
 
 import com.projetodeestudo.course.models.entities.User;
 import com.projetodeestudo.course.service.UserService;
+import jakarta.transaction.Transactional;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriBuilder;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -29,6 +30,25 @@ public class UserController {
     @GetMapping(value = "/{id}")
     public ResponseEntity<User> findUserById(@PathVariable Integer id) {
         User user = userServices.findById(id);
+        return ResponseEntity.ok().body(user);
+    }
+
+    @PostMapping("/user")
+    public ResponseEntity<User> insertUser(@RequestBody User user, UriComponentsBuilder uriComponentsBuilder) {
+        user = userServices.insertUser(user);
+        URI uri = uriComponentsBuilder.path("/{id}").buildAndExpand(user.getId()).toUri();
+        return ResponseEntity.created(uri).body(user);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Integer id) {
+        userServices.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable Integer id, @RequestBody User user) {
+        user = userServices.update(id, user);
         return ResponseEntity.ok().body(user);
     }
 }
