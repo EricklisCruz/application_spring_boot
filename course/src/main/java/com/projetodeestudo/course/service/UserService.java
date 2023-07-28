@@ -4,8 +4,10 @@ import com.projetodeestudo.course.models.entities.User;
 import com.projetodeestudo.course.repositories.UserRepository;
 import com.projetodeestudo.course.service.exceptions.DatabaseException;
 import com.projetodeestudo.course.service.exceptions.ResourceNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -48,9 +50,13 @@ public class UserService {
     }
 
     public User update(Integer id, User user) {
-        User entity = userRepository.getReferenceById(id);
-        updateData(entity, user);
-        return userRepository.save(entity);
+        try {
+            User entity = userRepository.getReferenceById(id);
+            updateData(entity, user);
+            return userRepository.save(entity);
+        } catch (RuntimeException e) {
+            throw new ResourceNotFoundException(id);
+        }
     }
 
     private void updateData(User entity, User user) {
